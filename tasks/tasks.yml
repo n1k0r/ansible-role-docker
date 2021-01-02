@@ -1,0 +1,46 @@
+- name: Install packages for apt
+  package:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg-agent
+    state: present
+
+- name: Add Docker's GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
+    state: present
+    update_cache: yes
+
+- name: Install Docker package
+  package:
+    name: docker-ce
+    state: present
+
+- name: Add user to docker group
+  user:
+    name: "{{ account.user }}"
+    groups: docker
+    append: yes
+
+- name: Install requirements for Docker-Compose
+  package:
+    name: python3-pip
+    state: present
+
+- name: Install Docker-Compose
+  pip:
+    name:
+      - docker-compose
+    executable: pip3
+
+- name: Log in registry
+  community.general.docker_login:
+    registry_url: "{{ docker.registry.url }}"
+    username: "{{ docker.registry.username }}"
+    password: "{{ docker.registry.password }}"
