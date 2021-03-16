@@ -45,6 +45,7 @@
     executable: pip3
 
 - name: Log in registry
+  when: docker.registry is defined
   community.general.docker_login:
     registry_url: "{{ docker.registry.url }}"
     username: "{{ docker.registry.username }}"
