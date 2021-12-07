@@ -3,7 +3,7 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - gnupg-agent
+      - gnupg
     state: present
 
 - name: Add Docker's GPG key
