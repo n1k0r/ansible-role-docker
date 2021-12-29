@@ -44,6 +44,12 @@
       - docker-compose
     executable: pip3
 
+- name: Configure daemon
+  copy:
+    dest: /etc/docker/daemon.json
+    content: "{{ docker.daemon | default(docker_daemon_default) | to_nice_json }}"
+  notify: Restart Docker
+
 - name: Log in registry
   when: docker.registry is defined
   community.general.docker_login:
