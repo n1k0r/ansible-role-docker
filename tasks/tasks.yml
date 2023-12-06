@@ -22,21 +22,10 @@
     name: docker-ce
     state: present
 
-- name: Install requirements for Docker-Compose
-  package:
-    name: python3-pip
-    state: present
-
-- name: Install Docker-Compose dependency
-  package:
-    name: libffi-dev
-    state: present
-
 - name: Install Docker-Compose
-  pip:
-    name:
-      - docker-compose
-    executable: pip3
+  package:
+    name: docker-compose
+    state: present
 
 - name: Configure daemon
   copy:
