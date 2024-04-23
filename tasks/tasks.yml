@@ -22,11 +22,6 @@
     name: docker-ce
     state: present
 
-- name: Install Docker-Compose
-  package:
-    name: docker-compose
-    state: present
-
 - name: Configure daemon
   copy:
     dest: /etc/docker/daemon.json

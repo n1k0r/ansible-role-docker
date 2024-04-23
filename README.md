@@ -11,5 +11,5 @@ docker:
 
   daemon: # default value
     log-driver: local
-    userlang-proxy: false
+    userland-proxy: false
 ```
