@@ -6,16 +6,17 @@
       - gnupg
     state: present
 
-- name: Add Docker's GPG key
-  apt_key:
-    url: https://download.docker.com/linux/debian/gpg
-    state: present
-
 - name: Add Docker repository
-  apt_repository:
-    repo: deb https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
-    state: present
-    update_cache: yes
+  deb822_repository:
+    name: docker
+    uris: https://download.docker.com/linux/{{ ansible_distribution | lower }}
+    suites: "{{ ansible_distribution_release }}"
+    components: stable
+    signed_by: https://download.docker.com/linux/debian/gpg
+  notify: Update apt cache
+
+- name: Fetch Docker repository
+  meta: flush_handlers
 
 - name: Install Docker package
   package:
