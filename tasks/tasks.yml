@@ -4,6 +4,7 @@
       - apt-transport-https
       - ca-certificates
       - gnupg
+      - python3-debian
     state: present
 
 - name: Add Docker repository
